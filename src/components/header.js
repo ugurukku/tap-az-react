@@ -10,7 +10,7 @@ const print = () => {
 
   return (
     <>
-      <div className='bg-[#FF4F08] text-white'>
+      <div className='bg-[#FF4F08] text-white w-full'>
 
         <div className='container mx-auto gap-x-6 py-2 flex items-center justify-center'>
 
@@ -33,7 +33,7 @@ const print = () => {
             <button className='m-2 rounded bg-[#FC2E20] flex items-center gap-x-1 px-4 py-1 text-white font-medium hover:bg-violet-700' ><BiSearchAlt></BiSearchAlt>Axtar</button>
           </span>
 
-          <Link className="flex items-center gap-x-2 transition-all hover:text-violet-700 cursor-pointer">
+          <Link to={'/newProduct'} className="flex items-center gap-x-2 transition-all hover:text-violet-700 cursor-pointer">
             <BiAddToQueue size={30}></BiAddToQueue>
             Yeni elan
           </Link>
