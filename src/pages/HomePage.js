@@ -9,7 +9,7 @@ import Header from '../components/header'
 // import watch from '../assets/watch.jpg';
 import ItemCard from '../components/item-card';
 import { Link } from 'react-router-dom';
-import { API } from '../utils/instance';
+import { API, productURI } from '../utils/instance';
 
 // {
 //   image: backpack,
@@ -55,7 +55,7 @@ const HomePage = () => {
   useEffect(() => {
 
     const getProducts = async () => {
-      const response = await API.get();
+      const response = await API.get(productURI);
       setProducts(response.data);
     }
     getProducts();

@@ -15,8 +15,8 @@ const ItemCard = ({item}) => {
           <span className='px-3 py-1 rounded-full text-xs bg-gray-100'>{item.city.name}</span>
         </div>
 
-        <h2 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap" title={item.name}>
-       {item.name}
+        <h2 className="font-semibold text-2xl overflow-ellipsis overflow-hidden whitespace-nowrap" title={item.title}>
+       {item.title}
         </h2>
 
         <div className="price">
