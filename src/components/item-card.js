@@ -1,12 +1,13 @@
-
 import React from 'react'
+
+const imageURI = "http://localhost:8080/images";
 
 const ItemCard = ({item}) => {
   return (
     <div key={item.id} className=' bg-white text-gray-700 w-72 min-h-[10rem] shadow-lg rounded overflow-hidden col-span-1 row-span-1 hover:scale-105'>
       <img
           className='h-full w-full max-h-[192px] max-w-[288px]  bg-center bg-cover bg-no-repeat '
-        src={item.image} alt={item.title}
+        src={`${imageURI}/${item.id}`} alt={item.title}
       />
 
       <div className='p-3 flex flex-col gap-3'>

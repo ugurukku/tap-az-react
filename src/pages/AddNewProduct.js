@@ -1,16 +1,64 @@
 import React, { useState } from 'react'
 import Header from '../components/header'
-import { categoryURI, cityURI } from '../utils/instance';
+import { categoryURI, cityURI, imageURI, productURI } from '../utils/instance';
 import { API } from '../utils/instance';
 
 const AddNewProduct = () => {
 
-  const loadFile = (event) => {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0]);
+
     var image = document.getElementById('uploaded-image');
     image.src = URL.createObjectURL(event.target.files[0]);
+  };
+
+  const saveImage = (id) => {
+
+    const formData = new FormData();
+    formData.append('image', selectedFile, selectedFile.name)
+
+
+    API.post(`${imageURI}/${Number(id)}`, formData).then((response) => {
+     console.log(response);
+    })
+      .catch((error) => {
+        console.log(error);
+      });
 
   };
 
+
+  const addProduct = (event) => {
+    var name1 = document.getElementById('product_name').value;
+    var price1 = document.getElementById('product_price').value;
+    var description1 = document.getElementById('product_desc').value;
+    var category1 = document.getElementById('product_category').value;
+    var city1 = document.getElementById('product_city').value;
+
+
+
+    let product = {
+      title: name1,
+      price: price1,
+      description: description1,
+      category: { id: category1 },
+      city: { id: city1 }
+    };
+
+    API.post(productURI, product,)
+      .then((response) => {
+
+        saveImage(response.data);
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+  };
 
   const [cities, setCities] = useState([])
 
@@ -25,7 +73,7 @@ const AddNewProduct = () => {
   }, []);
 
   const [categories, setCategories] = useState([])
-  
+
   useState(() => {
 
     const getCategories = async () => {
@@ -46,7 +94,7 @@ const AddNewProduct = () => {
 
 
         <div className="mt-5 md:mt-0 md:col-span-2 ">
-          <form action="#" method="POST">
+          <form >
             <div className="shadow sm:rounded-md sm:overflow-hidden">
               <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
                 <div className="grid grid-cols-3 gap-6">
@@ -84,7 +132,7 @@ const AddNewProduct = () => {
                       <select type="text" name="product_category" id="product_category" className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 py-3 px-2" placeholder="Gözəl məhsul">
 
 
-                      {
+                        {
                           categories.map((category) => {
                             return <option key={category.id} value={category.id} >{category.name}</option>
                           }
@@ -129,7 +177,7 @@ const AddNewProduct = () => {
 
                         <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                           <span>Upload a file</span>
-                          <input onChange={(event) => loadFile(event)} id="file-upload" name="file-upload" type="file" className="sr-only" />
+                          <input onChange={handleFileSelect} id="file-upload" name="file-upload" type="file" className="sr-only" />
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
@@ -141,7 +189,7 @@ const AddNewProduct = () => {
                 </div>
               </div>
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button onClick={() => addProduct()} type="button" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   Save
                 </button>
               </div>
