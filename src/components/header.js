@@ -39,7 +39,7 @@ const print = () => {
           </Link>
 
 
-          <Link className='flex items-center gap-x-2 float-right cursor-pointer hover:text-violet-700'>
+          <Link className='flex items-center gap-x-2 float-right cursor-pointer hover:text-yellow-700'>
           <BiUserCircle size={30}></BiUserCircle>
           username
           </Link>
