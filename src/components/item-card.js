@@ -4,7 +4,7 @@ const imageURI = "http://localhost:8080/images";
 
 const ItemCard = ({item}) => {
   return (
-    <div key={item.id} className=' bg-white text-gray-700 w-72 min-h-[10rem] shadow-lg rounded overflow-hidden col-span-1 row-span-1 hover:scale-105'>
+    <div key={item.id} className=' bg-white text-gray-700 w-72 min-h-[10rem] shadow-lg rounded overflow-hidden col-span-1 row-span-1 hover:scale-105 duration-300'>
       <img
           className='h-full w-full max-h-[192px] max-w-[288px]  bg-center bg-cover bg-no-repeat '
         src={`${imageURI}/${item.id}`} alt={item.title}
@@ -26,11 +26,6 @@ const ItemCard = ({item}) => {
           </span>
         </div>
 
-        <div className='mt-2 flex gap-2 justify-center'>
-          <button className='bg-yellow-500  px-6 py-2 rounded-md text-white font-medium tracking-wider transition hover:bg-violet-700'>
-          Səbətə əlavə et.
-          </button>
-        </div>
 
       </div>
 
