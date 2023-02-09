@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { BiCategoryAlt, BiUserCircle, BiAddToQueue, BiSearchAlt } from "react-icons/bi";
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { API, categoryURI } from '../utils/instance';
 
+
 const Header = () => {
+
+  const userInfo = useSelector((state) => state.auth);
+
 
   const [categories, setCategories] = useState([])
 
@@ -24,7 +29,7 @@ const Header = () => {
         <div className='container mx-auto gap-x-6 py-2 flex items-center justify-center'>
 
 
-          <a href='/' className='mx-3 text-[20px] font-bold font-sans hover:text-black'>
+          <a href='/products' className='mx-3 text-[20px] font-bold font-sans hover:text-black'>
             ukku.az
           </a>
 
@@ -72,7 +77,7 @@ const Header = () => {
 
           <Link className='flex items-center gap-x-2 float-right cursor-pointer hover:text-black'>
             <BiUserCircle size={30}></BiUserCircle>
-            username
+           {userInfo.username}
           </Link>
 
 
