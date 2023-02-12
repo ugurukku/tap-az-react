@@ -44,7 +44,7 @@ const HomePage = () => {
             )
           }
           {
-            products.length<1?<h1>Isteinyinze uyufn netice tapilmadi</h1>:''
+            products.length<1?<h1 className='text-white'>Uyğun nəticə tapılmadı</h1>:''
           }
         </div>
         <div className='bg-orange-600 py-2' >

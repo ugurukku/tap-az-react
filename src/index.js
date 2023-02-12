@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-
+import { Toaster } from "react-hot-toast";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { router } from './utils/router';
@@ -13,6 +13,10 @@ import store from './auth/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Toaster
+    position="top-center"
+    reverseOrder={false}
+    />
     <Provider store={store}>
 <RouterProvider router={router} >
 
