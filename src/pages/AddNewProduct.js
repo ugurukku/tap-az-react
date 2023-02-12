@@ -9,6 +9,8 @@ const AddNewProduct = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const userInfo = useSelector((state) => state.auth);
+ 
+  var base64 = require('base-64');
   
 
   const handleFileSelect = (event) => {
@@ -23,11 +25,10 @@ const AddNewProduct = () => {
     const formData = new FormData();
     formData.append('image', selectedFile, selectedFile.name)
 
-    var base64 = require('base-64');
 
     API.post(`${imageURI}/${Number(id)}`, formData, {
       headers: {
-        // Authorization: "Basic " + base64.encode(username + ":" + password)
+        Authorization: "Basic " + base64.encode(userInfo.email + ":" + userInfo.password)
       }
     }).then((response) => {
       console.log(response);
@@ -40,6 +41,7 @@ const AddNewProduct = () => {
 
 
   const addProduct = (event) => {
+    event.preventDefault();
     var name1 = document.getElementById('product_name').value;
     var price1 = document.getElementById('product_price').value;
     var description1 = document.getElementById('product_desc').value;
@@ -56,11 +58,13 @@ const AddNewProduct = () => {
       city: { id: city1 }
     };
 
-    API.post(productURI, product,)
+    API.post(productURI, product,{
+      headers:{
+        Authorization:'Basic ' + base64.encode(userInfo.email + ":" + userInfo.password)
+      }
+    })
       .then((response) => {
-
         saveImage(response.data);
-
       })
       .catch((error) => {
         console.log(error);
@@ -72,7 +76,6 @@ const AddNewProduct = () => {
   const [cities, setCities] = useState([])
 
   useState(() => {
-    console.log(userInfo.username);
 
     const getCities = async () => {
       const response = await API.get(cityURI);
@@ -174,7 +177,7 @@ const AddNewProduct = () => {
               </div>
 
               <div className="px-4 text-center sm:px-6 lg:px-52">
-                <button type="submit" className="inline-flex justify-center py-1 px-10  text-3xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button onSubmit={(event) => addProduct(event)} type="submit" className="inline-flex justify-center py-1 px-10  text-3xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   Elanı əlavə et
                 </button>
               </div>
