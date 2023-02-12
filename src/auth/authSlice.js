@@ -22,7 +22,8 @@ export const authSlice = createSlice({
             state.password = newAuth.password;
             state.username = newAuth.username;
 
-            console.log(state.id);
+            localStorage.setItem("user",JSON.stringify(newAuth));
+            console.log(newAuth);
         },
     },
 });

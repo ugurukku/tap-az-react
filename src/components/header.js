@@ -1,16 +1,20 @@
 import React, { useState } from 'react'
-import { BiCategoryAlt, BiUserCircle, BiAddToQueue, BiSearchAlt } from "react-icons/bi";
-import { useSelector } from 'react-redux';
+import { BiCategoryAlt, BiUserCircle, BiAddToQueue, BiSearchAlt, BiExit } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 import { API, categoryURI } from '../utils/instance';
 
 
 const Header = () => {
 
-  const userInfo = useSelector((state) => state.auth);
-
+  const userInfo = JSON.parse(localStorage.getItem("user"));
 
   const [categories, setCategories] = useState([])
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.reload(true);
+  };
 
   useState(() => {
 
@@ -68,10 +72,12 @@ const Header = () => {
             <button className='m-2 rounded bg-[#FC2E20] flex items-center gap-x-1 px-4 py-1 text-white font-medium hover:text-black' ><BiSearchAlt></BiSearchAlt>Axtar</button>
           </span>
 
-          <Link to={'/newProduct'} className="flex items-center gap-x-2 transition-all hover:text-black cursor-pointer">
-            <BiAddToQueue size={30}></BiAddToQueue>
-            Yeni elan
-          </Link>
+        {
+          userInfo == null? '':  <Link to={'/newProduct'} className="flex items-center gap-x-2 transition-all hover:text-black cursor-pointer">
+          <BiAddToQueue size={30}></BiAddToQueue>
+          Yeni elan
+        </Link>
+        }
 
 
 
@@ -80,10 +86,10 @@ const Header = () => {
               className="font-semibold py-2 px-4 rounded gap-1 inline-flex items-center"
             >
               <BiUserCircle size={30}></BiUserCircle>
-              {userInfo.username.length < 2 ? "Daxil ol" : userInfo.username}
+              {userInfo ==null ? "Daxil ol" : userInfo.username}
             </button>
 
-            {userInfo.username.length < 2 ?
+            {userInfo == null ?
               <ul className="absolute hidden min-w-full  text-white pt-1 group-hover:block">
                 <li key={"login"}>
                   <Link className=" bg-[#FF4F08] hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" to={"/login"}>Giriş</Link>
@@ -94,11 +100,11 @@ const Header = () => {
               </ul>
               :
               <ul className="absolute hidden min-w-full  text-white pt-1 group-hover:block">
-               <li key={"my-prod"}>
-                  <Link className=" bg-[#FF4F08]  hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" to={"/register"}>Elanlarım</Link>
+                <li key={"my-prod"}>
+                  <Link className=" bg-[#FF4F08] hover:bg-gray-400 py-2 px-4 block " to={"/my-prod"}>Elanlarım</Link>
                 </li>
                 <li key={"sign-out"}>
-                  <Link className=" bg-[#FF4F08]  hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" to={"/register"}>Çıxış</Link>
+                  <button onClick={() => handleLogout()} type="button" className=" bg-[#FF4F08] text-center min-w-full hover:bg-gray-400 py-2 px-4 content-center inline-flex items-center">Çıxış<BiExit/></button>
                 </li>
               </ul>
             }

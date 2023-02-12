@@ -1,17 +1,26 @@
+
 import React, { useState } from 'react'
+import { toast } from 'react-hot-toast';
 import Header from '../components/header'
 import { categoryURI, cityURI, imageURI, productURI } from '../utils/instance';
 import { API } from '../utils/instance';
-import { useSelector } from 'react-redux';
 
 const AddNewProduct = () => {
 
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const userInfo = useSelector((state) => state.auth);
- 
+  const userInfo = JSON.parse(localStorage.getItem("user"));
+
+  const [cities, setCities] = useState([])
+
+  const [categories, setCategories] = useState([])
+
   var base64 = require('base-64');
-  
+
+  const delay = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
 
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -25,13 +34,14 @@ const AddNewProduct = () => {
     const formData = new FormData();
     formData.append('image', selectedFile, selectedFile.name)
 
-
     API.post(`${imageURI}/${Number(id)}`, formData, {
       headers: {
         Authorization: "Basic " + base64.encode(userInfo.email + ":" + userInfo.password)
       }
     }).then((response) => {
-      console.log(response);
+      toast.success("Məhsul uğurla edildi");
+      delay(2000);
+      window.location.reload(false);
     })
       .catch((error) => {
         console.log(error);
@@ -58,9 +68,9 @@ const AddNewProduct = () => {
       city: { id: city1 }
     };
 
-    API.post(productURI, product,{
-      headers:{
-        Authorization:'Basic ' + base64.encode(userInfo.email + ":" + userInfo.password)
+    API.post(productURI, product, {
+      headers: {
+        Authorization: 'Basic ' + base64.encode(userInfo.email + ":" + userInfo.password)
       }
     })
       .then((response) => {
@@ -73,19 +83,7 @@ const AddNewProduct = () => {
 
   };
 
-  const [cities, setCities] = useState([])
 
-  useState(() => {
-
-    const getCities = async () => {
-      const response = await API.get(cityURI);
-      setCities(response.data);
-    }
-    getCities();
-
-  }, []);
-
-  const [categories, setCategories] = useState([])
 
   useState(() => {
 
@@ -95,6 +93,12 @@ const AddNewProduct = () => {
     }
     getCategories();
 
+    const getCities = async () => {
+      const response = await API.get(cityURI);
+      setCities(response.data);
+    }
+    getCities();
+
   }, []);
 
 
@@ -103,7 +107,7 @@ const AddNewProduct = () => {
       <Header></Header>
       <div className='bg-[#0B1C48] min-h-screen'>
         <div className="mt-5 mx-auto  md:mt-0 md:col-span-2 place-content-center">
-          <form onSubmit={() => addProduct()}>
+          <form onSubmit={addProduct}>
             <div className="mx-auto sm:rounded-md sm:overflow-hidden">
               <div className="px-4 mx-auto text-white space-y-6 sm:p-6">
                 <div className="col-span-3 sm:col-span-2">
@@ -177,7 +181,7 @@ const AddNewProduct = () => {
               </div>
 
               <div className="px-4 text-center sm:px-6 lg:px-52">
-                <button onSubmit={(event) => addProduct(event)} type="submit" className="inline-flex justify-center py-1 px-10  text-3xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button type="submit" className="inline-flex justify-center py-1 px-10  text-3xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                   Elanı əlavə et
                 </button>
               </div>
