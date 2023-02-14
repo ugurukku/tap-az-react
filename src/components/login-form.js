@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import { setAuth } from '../auth/authSlice';
 import { API } from '../utils/instance';
+
 
 const LoginForm = () => {
 
@@ -13,7 +14,7 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
 
   const handleSubmit = (event) => {
@@ -42,7 +43,7 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='flex px-16 py-12 flex-col gap-3 max-w-xl shadow-2xl border border-gray-300 rounded-2xl bg-white'>
+    <form onSubmit={handleSubmit} className='flex px-16 py-12 flex-col gap-3 w-3/6 max-w-xl shadow-2xl border border-gray-300 rounded-2xl bg-white'>
 
       <label htmlFor="" className='flex flex-col gap-1'>
         Elektron poçt

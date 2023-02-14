@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-const imageURI = "http://localhost:8080/images";
+import {host} from '../utils/instance';
+
+const imageURI = `http://${host}:8080/images`;
 
 const ItemCard = ({item}) => {
   return (

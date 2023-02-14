@@ -5,6 +5,8 @@ import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
 import ProductDetail from '../pages/ProductDetail';
 import Register from '../pages/Register';
+import Verify from '../pages/Verify';
+
 
 export const router = createBrowserRouter([
 {
@@ -13,7 +15,7 @@ export const router = createBrowserRouter([
 },
 {
     path:'/products',
-    element:<HomePage/>
+    element:<HomePage></HomePage>
 },
 {
     path:'/products/:id',
@@ -21,7 +23,7 @@ export const router = createBrowserRouter([
 },
 {
     path:'/newProduct',
-    element:<AddNewProduct/>
+    element: <AddNewProduct/>
 },
 {
     path:'/register',
@@ -29,6 +31,9 @@ export const router = createBrowserRouter([
 },{
     path:'/login',
     element:<Login/>
+},{
+    path:'/register/verify',
+    element:<Verify/>
 },
 
 {
