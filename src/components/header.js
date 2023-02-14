@@ -1,16 +1,32 @@
 import React, { useState } from 'react'
-import { BiCategoryAlt, BiUserCircle, BiAddToQueue, BiSearchAlt } from "react-icons/bi";
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { BiCategoryAlt, BiUserCircle, BiAddToQueue, BiSearchAlt, BiExit } from "react-icons/bi";
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { API, categoryURI } from '../utils/instance';
+import { removeAuth } from '../auth/authSlice';
+import { toast } from 'react-hot-toast';
+
 
 
 const Header = () => {
 
-  const userInfo = useSelector((state) => state.auth);
-
+  const userInfo = JSON.parse(localStorage.getItem("user"));
 
   const [categories, setCategories] = useState([])
+
+  const [open,setOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    dispatch(removeAuth());
+    navigate("/");
+    toast.success("Gülə gülə :)");
+  };
 
   useState(() => {
 
@@ -24,24 +40,26 @@ const Header = () => {
 
   return (
     <>
-      <div className='bg-[#FF4F08] text-white w-full'>
+      <div className='bg-[#FF4F08] text-white overflow-y-visible '>
 
-        <div className='container mx-auto gap-x-6 py-2 flex items-center justify-center'>
+        <div className='container mx-auto gap-x-6 py-2 flex items-center justify-between'>
 
 
-          <a href='/products' className='mx-3 text-[20px] font-bold font-sans hover:text-black'>
+
+          <a href='/products' className='ml-10 text-[20px] font-bold font-sans hover:text-black'>
             ukku.az
           </a>
 
-
-          <div className="group  inline-block relative hover:text-black">
-            <button
+          <div className= "flex items-center  overflow-y-visible">
+           
+           <div className='group relative hover:text-black overflow-y-visible'>
+           <button
               className="font-semibold py-2 px-4 rounded inline-flex items-center"
             >
               <BiCategoryAlt className='mr-1' size={30}></BiCategoryAlt>
               Kateqoriyalar
             </button>
-            <ul className="absolute hidden min-w-full  text-white pt-1 group-hover:block">
+            <ul className={`absolute hidden min-w-full  text-white  pt-1 group-hover:block`}>
               {
                 categories.map((category) => {
                   return <li key={category.id}>
@@ -55,35 +73,42 @@ const Header = () => {
               }
 
             </ul>
+           </div>
 
-          </div>
-
-
-          <span className='flex w-96 rounded bg-white mx-0'>
+            <span className='flex max-w-96 rounded bg-white overflow-y-visible'>
             <input type="search"
               name='search'
               id='search'
               placeholder='Axtarış'
-              className='w-full border-none bg-transparent py-2 px-4 text-gray-900 outline-none focus:outline-none text-sm' />
-            <button className='m-2 rounded bg-[#FC2E20] flex items-center gap-x-1 px-4 py-1 text-white font-medium hover:text-black' ><BiSearchAlt></BiSearchAlt>Axtar</button>
+              className='max-w-fit border-none bg-transparent py-2 px-4 text-gray-900 outline-none focus:outline-none text-sm' />
+            <button className='m-2  rounded bg-[#FC2E20] flex items-center gap-x-1 px-4 py-1 text-white font-medium hover:text-black' ><BiSearchAlt></BiSearchAlt>Axtar</button>
           </span>
 
-          <Link to={'/newProduct'} className="flex items-center gap-x-2 transition-all hover:text-black cursor-pointer">
-            <BiAddToQueue size={30}></BiAddToQueue>
-            Yeni elan
-          </Link>
+          {
+          userInfo == null? '':  <Link to={'/newProduct'} className="flex items-center py-2 px-4 gap-x-2 transition-all hover:text-black cursor-pointer">
+          <BiAddToQueue size={30}></BiAddToQueue>
+          Yeni elan
+        </Link>
+        }
+
+          </div>
+
+
+         
+
+      
 
 
 
-          <div className="group  inline-block relative hover:text-black">
+          <div className="group inline-block relative hover:text-black overflow-y-visible">
             <button
               className="font-semibold py-2 px-4 rounded gap-1 inline-flex items-center"
             >
               <BiUserCircle size={30}></BiUserCircle>
-              {userInfo.username.length < 2 ? "Daxil ol" : userInfo.username}
+              {userInfo ==null ? "Daxil ol" : userInfo.username}
             </button>
 
-            {userInfo.username.length < 2 ?
+            {userInfo == null ?
               <ul className="absolute hidden min-w-full  text-white pt-1 group-hover:block">
                 <li key={"login"}>
                   <Link className=" bg-[#FF4F08] hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" to={"/login"}>Giriş</Link>
@@ -94,11 +119,11 @@ const Header = () => {
               </ul>
               :
               <ul className="absolute hidden min-w-full  text-white pt-1 group-hover:block">
-               <li key={"my-prod"}>
-                  <Link className=" bg-[#FF4F08]  hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" to={"/register"}>Elanlarım</Link>
+                <li key={"my-prod"}>
+                  <Link className=" bg-[#FF4F08] hover:bg-gray-400 py-2 px-4 block " to={"/my-products"}>Elanlarım</Link>
                 </li>
                 <li key={"sign-out"}>
-                  <Link className=" bg-[#FF4F08]  hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" to={"/register"}>Çıxış</Link>
+                  <button onClick={() => handleLogout()} type="button" className=" bg-[#FF4F08] text-center min-w-full hover:bg-gray-400 py-2 px-4 content-center inline-flex items-center">Çıxış<BiExit/></button>
                 </li>
               </ul>
             }

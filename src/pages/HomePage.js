@@ -10,18 +10,26 @@ const HomePage = () => {
 
   useEffect(() => {
 
-    const categoryId = Number(window.location.href.split('=')[1]);
+    const param = window.location.href.split('=')[1];
 
-    if (!isNaN(categoryId)) {
+    if (!isNaN(param)) {
 
       const getProducts = async () => {
-        const response = await API.get(`${productURI}?category=${categoryId}`);
+        const response = await API.get(`${productURI}?category=${param}`);
         setProducts(response.data);
       }
 
       getProducts();
 
-    } else {
+    } else if (param?.length>2) {
+      const getProducts = async () => {
+        const response = await API.get(`${productURI}?user=${param}`);
+        setProducts(response.data);
+      }
+
+      getProducts();
+    }
+    else {
       const getProducts = async () => {
         const response = await API.get(productURI);
         setProducts(response.data);
@@ -34,7 +42,7 @@ const HomePage = () => {
   return (
     <>
       <Header></Header>
-      <div className='bg-[#0B1C48] w-full' >
+      <div className='bg-[#0B1C48] h-full w-full' >
         <div className='pt-4 pb-4  gap-4 px-px min-h-screen w-full grid justify-items-center  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1'>
 
           {
@@ -44,7 +52,7 @@ const HomePage = () => {
             )
           }
           {
-            products.length<1?<h1 className='text-white'>Uyğun nəticə tapılmadı</h1>:''
+            products.length < 1 ? <h1 className='text-white'>Uyğun nəticə tapılmadı</h1> : ''
           }
         </div>
         <div className='bg-orange-600 py-2' >

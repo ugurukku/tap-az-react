@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/header';
-import { API, productURI } from '../utils/instance';
+import { API, productURI,host } from '../utils/instance';
 
-const imageURI = "http://localhost:8080/images";
+const imageURI = `http://${host}:8080/images`;
 
 const ProductDetail = () => {
   const [count, setCount] = useState(0);
@@ -52,7 +52,6 @@ const ProductDetail = () => {
 
             <p className=" font-normal text-base leading-6 mt-7">{item.description}</p>
             <p className=" font-semibold text-black lg:text-2xl text-xl lg:leading-6 leading-5 mt-6 ">{item.price} AZN</p>
-
             <div className="lg:mt-11 mt-10">
               <div className="flex flex-row justify-between">
                 <p className=" font-medium text-base leading-4 text-gray-400">Məhsul sayını seçin</p>
@@ -70,6 +69,7 @@ const ProductDetail = () => {
             </div>
 
             <button className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-[#FF4F08] w-full py-5 lg:mt-12 mt-6"> Səbətə əlavə et </button>
+            <div className='mt-4 text-center '><a href={`/products?user=${item.userEmail}`} className="font-bold text-black mt-14">İstifadəçinin bütün elanları</a>  </div>
           </div>
 
           {/* <!-- Preview Images Div For larger Screen--> */}
