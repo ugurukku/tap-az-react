@@ -1,6 +1,6 @@
 import axios from "axios";
 export const API = axios.create({
-    baseURL:"http://192.168.1.69:8080"
+    baseURL:"http://192.168.11.232:8080"
     
 });
 
@@ -9,4 +9,4 @@ export const productURI = "/products";
 export const categoryURI = "/categories";
 export const imageURI = "/images";
 
-export const host = "192.168.1.69";
+export const host = "192.168.11.232";

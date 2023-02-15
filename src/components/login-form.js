@@ -19,31 +19,27 @@ const LoginForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    };
 
     API.post('/login', {
       email: emaill,
       password: passwordl
     }
-      , config
     ).then((response) => {
+      alert("Success");
       toast.success(`${response.data.username} xoş gəldin`, { icon: '👏' });
       dispatch(setAuth(response.data));
       navigate("/");
     }
     ).catch((error) => {
+    alert(error.response.data)
+
       toast.error(error.response.data);
     });
 
   }
 
   return (
-    <form onSubmit={handleSubmit} className='flex px-16 py-12 flex-col gap-3 w-3/6 max-w-xl shadow-2xl border border-gray-300 rounded-2xl bg-white'>
+    <form onSubmit={handleSubmit} className='flex px-16 py-12 flex-col gap-3 min-w-[60%] shadow-2xl border border-gray-300 rounded-2xl bg-white'>
 
       <label htmlFor="" className='flex flex-col gap-1'>
         Elektron poçt
@@ -53,7 +49,7 @@ const LoginForm = () => {
         Şifrə
         <input required type="password" onChange={(e) => setPassword(e.target.value)} className='p-3 border border-gray-500 shadow-sm bg-gray-200' />
       </label>
-      <button className='bg-[#FC2E20] py-2 rounded shadow-sm text-white text-lg hover:bg-blue-800'>Giriş et</button>
+      <button type='submit' className='bg-[#FC2E20] py-2 rounded mt-2 shadow-sm text-white text-lg hover:bg-blue-800'>Giriş et</button>
       <label htmlFor="" className='text-center text-gray-400'>
         və ya
       </label>
