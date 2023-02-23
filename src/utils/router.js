@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
     element: <ProductList user_id={userInfo.id}/>
 },{
     path:'/my-products/:id',
-    element: <ProductDetail/>
+    element: <ProductDetail editable={true}/>
 },
 {
     path:'/register',
