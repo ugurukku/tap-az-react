@@ -16,6 +16,7 @@ const ProductDetail = () => {
 
     const getProduct = async (id) => {
       const response = await API.get(`${productURI}/${id}`);
+      console.log(response.data);
       setItem(response.data);
     }
     getProduct(Number(id));
@@ -69,7 +70,7 @@ const ProductDetail = () => {
             </div>
 
             <button className="focus:outline-none focus:ring-2 hover:bg-black focus:ring-offset-2 focus:ring-gray-800 font-medium text-base leading-4 text-white bg-[#FF4F08] w-full py-5 lg:mt-12 mt-6"> Səbətə əlavə et </button>
-            <div className='mt-4 text-center '><a href={`/products?user=${item.userEmail}`} className="font-bold text-black mt-14">İstifadəçinin bütün elanları</a>  </div>
+            <div className='mt-4 text-center '><a href={`/products?user=${item.userId}`} className="font-bold text-black mt-14">İstifadəçinin bütün elanları</a>  </div>
           </div>
 
           {/* <!-- Preview Images Div For larger Screen--> */}

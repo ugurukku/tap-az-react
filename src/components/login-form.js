@@ -25,14 +25,11 @@ const LoginForm = () => {
       password: passwordl
     }
     ).then((response) => {
-      alert("Success");
       toast.success(`${response.data.username} xoş gəldin`, { icon: '👏' });
       dispatch(setAuth(response.data));
       navigate("/");
     }
     ).catch((error) => {
-    alert(error.response.data)
-
       toast.error(error.response.data);
     });
 
