@@ -118,7 +118,7 @@ const Header = () => {
               :
               <ul className="absolute hidden min-w-full  text-white pt-1 group-hover:block">
                 <li key={"my-prod"}>
-                  <Link className=" bg-[#FF4F08] hover:bg-gray-400 py-2 px-4 block " to={"/my-products"}>Elanlarım</Link>
+                  <a className=" bg-[#FF4F08] hover:bg-gray-400 py-2 px-4 block" href='/my-products'>Elanlarım</a>
                 </li>
                 <li key={"sign-out"}>
                   <button onClick={() => handleLogout()} type="button" className=" bg-[#FF4F08] text-center min-w-full hover:bg-gray-400 py-2 px-4 content-center inline-flex items-center">Çıxış<BiExit /></button>

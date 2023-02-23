@@ -16,7 +16,6 @@ const ProductDetail = () => {
 
     const getProduct = async (id) => {
       const response = await API.get(`${productURI}/${id}`);
-      console.log(response.data);
       setItem(response.data);
     }
     getProduct(Number(id));

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/header'
 import ItemCard from '../components/item-card';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { API, productURI } from '../utils/instance';
 
-const HomePage = () => {
+const HomePage = ({user_id}) => {
+
 
   const [products, setProducts] = useState([])
 
   useEffect(() => {
+    console.log(user_id);
 
     const param = window.location.href.split('=')[1];
 
@@ -21,12 +23,18 @@ const HomePage = () => {
 
       getProducts();
 
+    }else if (user_id !== undefined) {
+      const getProducts = async () => {
+        const response = await API.get(`${productURI}?user=${user_id}`);
+        setProducts(response.data);
+      }
+
+      getProducts();
     } else if (param?.length>2) {
       const getProducts = async () => {
         const response = await API.get(`${productURI}?user=${param}`);
         setProducts(response.data);
       }
-
       getProducts();
     }
     else {
@@ -37,6 +45,7 @@ const HomePage = () => {
       getProducts();
 
     }
+
   }, []);
 
   return (
@@ -47,7 +56,7 @@ const HomePage = () => {
 
           {
             products.map((product) => {
-              return <Link key={product.id} to={`/products/${product.id}`} > <ItemCard item={product} ></ItemCard> </Link>
+              return <Link key={product.id} target='_blank' to={user_id!==undefined?`/my-products/${product.id}`:`/products/${product.id}`} > <ItemCard item={product} ></ItemCard> </Link>
             }
             )
           }
